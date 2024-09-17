@@ -1,2 +1,2 @@
-# Movie-Theater-Booking-System
+# Movie Theater Booking System
 First project using the Python language.
