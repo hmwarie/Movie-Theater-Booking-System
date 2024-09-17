@@ -2,7 +2,8 @@
 # Section: CMSC12 - B3L
 # Code Description: Movie Theater Booking System
 
-from datetime import datetime # import the datetime function from the datetime module in the program to handle dates and times
+# import the datetime function from the datetime module in the program to handle dates and times
+from datetime import datetime 
 
 # save/load functions
 
@@ -23,27 +24,27 @@ def save_file(): # writes dictionary content into a file
         
         records.write(f"{data}|{movie_name}|{movie_genre}|{movie_restriction}|{date_time_viewing}|{end_time_viewing}|{movie_venue}|{seats}|{max_pax}|{customers}|{movie_price}\n") 
     
-    records.close() # writes the information stored in the variables which is separated by '|' that would be used to determine every info later when loaded, then the file is closed afterwards
+    records.close()
 
 def load_file(): # loads the file in which existing data is stored
     try: 
         records = open('movies_data.txt', 'r') # opens movies_data.txt but only on read mode
-        movies.clear() # it is a must to clear the current dictionary to avoid confusion with the id's and the saved changes
+        movies.clear()
 
         for i in records: # iterates through every line in the file
-            data = i[:-1].split('|') # remove the invisible "\n" at the end of each line and split the values using the separator '|', then puts it in a list
-            movie_id = data[0] # every info is saved in order thus it is easy to locate which is which in terms of the list
-            movie_data = {} # declare another dictionary
-            movies[movie_id] = movie_data # creating a nested dictionary
+            data = i[:-1].split('|') 
+            movie_id = data[0]
+            movie_data = {}
+            movies[movie_id] = movie_data
 
             movie_data['movie_name'] = data[1] 
             movie_data['movie_genre'] = data[2]
             movie_data['movie_restriction'] = data[3]
 
             dt_time_viewing = data[4] # gets the date and time as a string format
-            dt_viewing = datetime.strptime(dt_time_viewing,'%m-%d-%Y %I:%M %p') # let the program know that these are elements of a date and time (not just a string) by using strptime in the datetime module
-            date_time_viewing = dt_viewing.strftime('%m-%d-%Y %I:%M %p') # let the program know that this is the date format that I want 
-            movie_data['date_time_viewing'] = date_time_viewing # sets the date as the value of the key 'date_time_viewing'
+            dt_viewing = datetime.strptime(dt_time_viewing,'%m-%d-%Y %I:%M %p')
+            date_time_viewing = dt_viewing.strftime('%m-%d-%Y %I:%M %p')
+            movie_data['date_time_viewing'] = date_time_viewing
 
             ed_date_input = data[5] # same with date_time_viewing
             arr_dt = datetime.strptime(ed_date_input,'%m-%d-%Y %I:%M %p') 
@@ -56,11 +57,11 @@ def load_file(): # loads the file in which existing data is stored
             movie_data['customers'] = data[9]
             movie_data['movie_price'] = data[10]
 
-        records.close() # indicates that you are done with using the opened file
+        records.close()
         current_id[0] = sorted(movies.keys())[-1] # sets current id to the last or greatest value in the list of keys
 
-    except FileNotFoundError: # if no file was found yet, it means that it may be the first iteration or the admin has not added a movie yet
-        return # just return and still run the program
+    except FileNotFoundError:
+        return
 
 # functions
 
@@ -88,12 +89,12 @@ def user_class():
 
 def generate_id():
     if int(current_id[0]) < 9: # current_id[0] is classified into ranges; upon first use, current_id[0] is set to 0
-        ID = "000" + str(int(current_id[0]) + 1) # since those less than 9 take only the ones place even when added by 1, the value is concatenated to three leading zeroes
-        current_id[0] = ID # now, the value of current_id[0] is changed to the concatenated value
-        return ID # returns the generated id for display 
+        ID = "000" + str(int(current_id[0]) + 1)
+        current_id[0] = ID 
+        return ID 
     
-    elif int(current_id[0]) >= 9 and int(current_id[0]) < 99: # same goes with these other conditional statements
-        ID = "00" + str(int(current_id[0]) + 1) # to add 1 to current_id[0], type is changed to integer first then reverted back to string for concatenation
+    elif int(current_id[0]) >= 9 and int(current_id[0]) < 99:
+        ID = "00" + str(int(current_id[0]) + 1)
         current_id[0] = ID
         return ID
     
